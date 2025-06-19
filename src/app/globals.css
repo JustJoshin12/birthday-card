@@ -1,2 +1,6 @@
 @import "tailwindcss";
 
+.btn-gradient {
+  @apply rounded-lg bg-gradient-to-r from-pink-400 via-fuchsia-500 to-violet-600 text-white px-4 py-2 shadow hover:scale-105 transition;
+}
+
