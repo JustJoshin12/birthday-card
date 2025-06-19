@@ -8,6 +8,7 @@ import { photoCards } from "../data/photoCards";
 export default function PhotoCarousel({ onMessage }) {
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const [showNote, setShowNote] = useState(false);
 
   // Autoplay every 3 seconds when playing
   useInterval(() => setIdx((i) => (i + 1) % photoCards.length), playing ? 3000 : null);
@@ -23,6 +24,10 @@ export default function PhotoCarousel({ onMessage }) {
       <h2 className="mt-6 text-2xl md:text-3xl font-semibold text-center">Our Memories Together</h2>
       <p className="mt-2 max-w-2xl text-center text-base md:text-lg text-gray-700">
         Swipe through a few of my favourite moments with you. Here&rsquo;s to many more adventures ahead! 💕
+      </p>
+
+      <p className="mt-1 text-xs md:text-sm text-gray-500 text-center italic">
+        Hold or hover to see my note ✨
       </p>
 
       {/* Carousel viewport */}
@@ -43,8 +48,12 @@ export default function PhotoCarousel({ onMessage }) {
         {/* Note overlay */}
         <motion.div
           whileHover={{ opacity: 1 }}
+          animate={{ opacity: showNote ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          className="absolute inset-0 flex items-center justify-center rounded-3xl bg-black/40 text-white text-xl font-medium p-4 text-center"
+          onTouchStart={() => setShowNote(true)}
+          onTouchEnd={() => setShowNote(false)}
+          onTouchCancel={() => setShowNote(false)}
+          className="absolute inset-0 flex items-center justify-center rounded-3xl bg-black/40 text-white text-xl font-medium p-4 text-center select-none"
         >
           {photoCards[idx].note}
         </motion.div>
